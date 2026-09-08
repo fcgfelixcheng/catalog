@@ -43,7 +43,43 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','123456789');fbq('track','PageView');
-function trackLead(p){if(typeof fbq!=='undefined'){fbq('track','Lead',{content_name:p})}console.log('Lead:',p)}
+/* ===== FCG LEAD CAPTURE ===== */
+var FCG_ENDPOINT='';                 /* <-- paste your Google Apps Script Web App URL here */
+var FCG_PIXEL='811625034860420';     /* Meta Pixel */
+
+/* Meta Pixel loader */
+(function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)})
+(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+try{fbq('init',FCG_PIXEL);fbq('track','PageView')}catch(e){}
+
+/* fire-and-forget logger -> Google Sheet */
+function fcgLog(type,data){
+  try{
+    if(!FCG_ENDPOINT)return;
+    var p={type:type,page:location.pathname,ref:document.referrer||'',
+           utm:location.search||'',ua:navigator.userAgent.slice(0,120),
+           ts:new Date().toISOString()};
+    for(var k in data){if(Object.prototype.hasOwnProperty.call(data,k))p[k]=data[k]}
+    fetch(FCG_ENDPOINT,{method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)});
+  }catch(e){}
+}
+
+/* log every WhatsApp CTA click, with the project it came from */
+document.addEventListener('click',function(ev){
+  var a=ev.target&&ev.target.closest?ev.target.closest('a[href*="wa.me/"]'):null;
+  if(!a)return;
+  var t='';try{t=decodeURIComponent((a.href.split('text=')[1]||''))}catch(e){}
+  var m=t.match(/I clicked the (.+?) catalog/);
+  var proj=m?m[1]:(t.slice(0,70)||'generic');
+  fcgLog('wa_click',{project:proj});
+  try{fbq('track','Contact',{content_name:proj})}catch(e){}
+},true);
+
+function trackLead(p){try{fbq('track','Lead',{content_name:p})}catch(e){}fcgLog('lead',{project:p})}
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1434,6 +1470,7 @@ function submitLead(){
   var pr=document.getElementById('leadProperty').value;
   if(!n){alert('Please enter your name.');return}
   if(!ph||ph.length<8){alert('Please enter your phone number.');return}
+  fcgLog('form',{name:n,phone:ph,email:e,budget:b,property:pr});
   trackLead('Buyer-WA-'+(pr||'General'));
   var msg='Hi Felix, I would like help buying a home.%0A%0AName: '+encodeURIComponent(n)
     +'%0APhone: '+encodeURIComponent(ph)
