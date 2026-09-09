@@ -9,6 +9,7 @@
 <!-- Google Ads Tag — replace AW-XXXXXXXXXX with your Google Ads Conversion ID -->
 <script>/* Google Ads: paste your real AW- ID below and restore this loader */</script>
 <script>
+document.addEventListener('DOMContentLoaded',function(){
 document.querySelectorAll('.cat-chip').forEach(btn=>{
  btn.addEventListener('click',()=>{
   document.querySelectorAll('.cat-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
@@ -25,6 +26,7 @@ document.querySelectorAll('.cat-filter').forEach(btn=>{
     const f=btn.dataset.filter;
     document.querySelectorAll('.catalog-group').forEach(g=>g.style.display=(f==='all'||g.dataset.filter===f)?'':'none');
   });
+});
 });
 </script>
 <script>
@@ -800,7 +802,20 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.028;z
 <div class="catalog-filter reveal">
 <button class="cat-filter active" data-filter="all">ALL</button><button class="cat-filter" data-filter="under300">UNDER RM300K</button><button class="cat-filter" data-filter="mid">RM300K–RM500K</button><button class="cat-filter" data-filter="premium">RM500K+</button><button class="cat-filter" data-filter="condo">CONDO / SERVICED</button><button class="cat-filter" data-filter="landed">LANDED</button>
 </div>
-<section class="catalog-group reveal" data-filter="under300"><div class="group-title"><span>01</span><div><small>ENTRY POINT</small><h3>UNDER <em>RM300K.</em></h3></div><p>First-home and lower-ticket choices.</p></div><div class="full-grid"><article class="full-card" data-type="condo">
+<section class="catalog-group reveal" data-filter="under300"><div class="group-title"><span>01</span><div><small>ENTRY POINT</small><h3>UNDER <em>RM300K.</em></h3></div><p>First-home and lower-ticket choices.</p></div><div class="full-grid">
+<article class="full-card" data-type="landed">
+<div class="fc-photo img-missing"><div class="fc-missing">ARTIST&rsquo;S IMPRESSION<br><small>WhatsApp Felix for latest visuals</small></div><span>FREEHOLD</span></div>
+<div class="fc-body"><div class="fc-top"><span>LANDED</span><span>City of Elmina</span></div>
+<h3>Seri Embun</h3><div class="fc-dev">Eastern &amp; Oriental (E&amp;O)</div><p>Low-density superlink enclave in City of Elmina by a premium developer; freehold landed, clubhouse and pool within the enclave.</p>
+<div class="fc-spec">
+<div><small>PRICE / GUIDE</small><b>Enquire</b></div>
+<div><small>LAYOUT</small><b>2&frac12; &amp; 3 Storey</b></div>
+<div><small>TENURE</small><b>Freehold</b></div>
+<div><small>COMPLETION</small><b>2028</b></div>
+</div>
+<a class="fc-btn" href="https://wa.me/60182131314?text=Hi%20Felix%2C%20I%20clicked%20the%20Seri%20Embun%20%C2%B7%20City%20of%20Elmina%20catalog.%20I%E2%80%99m%20interested%20in%20this%20property.%20Please%20send%20me%20the%20latest%20brochure%2C%20current%20price%2C%20available%20unit%2C%20rebate%2Fpromotion%20and%20viewing%20details." target="_blank">LATEST PRICE &middot; BROCHURE &middot; VIEWING &uarr;</a>
+</div></article>
+<article class="full-card" data-type="condo">
 <div class="fc-photo"><img src="img/p05.jpg" alt="Myra Senja facade" loading="lazy" onerror="this.parentElement.classList.add(&quot;img-missing&quot;);"><div class="fc-missing">ARTIST&rsquo;S IMPRESSION<br><small>WhatsApp Felix for latest visuals</small></div><span>LOWER ENTRY</span></div>
 <div class="fc-body"><div class="fc-top"><span>CONDO</span><span>Subang 2</span></div>
 <h3>Myra Senja</h3><div class="fc-dev">Myra Land · OIB</div><p>Low-density Subang 2 residence; exact unit size, price and package to verify.</p>
