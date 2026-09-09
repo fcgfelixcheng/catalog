@@ -633,6 +633,51 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.028;z
 
 @media(max-width:860px){.quickbar{top:70px;margin-bottom:-18px;overflow:auto;justify-content:flex-start;flex-wrap:nowrap;white-space:nowrap}.quickbar a{flex:none}}
 @media(max-width:560px){.hero h1{font-size:49px}.hero-sub{font-size:15px}.buyer-head p{font-size:14px}.quickbar{border-radius:12px}}
+
+/* ================= MOBILE DENSITY FIX ================= */
+@media(max-width:768px){
+  /* cards were forced to 560px tall regardless of content = dead space */
+  .full-card{min-height:0}
+  .fc-body{padding:15px 16px 16px}
+  .fc-body p{min-height:0;margin-top:6px}
+  .fc-body h3{font-size:24px;margin:7px 0 3px}
+  .fc-photo{aspect-ratio:16/9}
+  .full-grid{gap:9px}
+  .fc-spec{margin-top:9px}
+  .fc-spec div{padding:7px 0}
+  .fc-btn{margin-top:11px}
+
+  /* section padding was desktop-sized (100-120px) on phones */
+  .intro{padding:46px 6%}
+  .props-section,.how,.loc,.testi,.lead{padding:44px 6%}
+  .buyer-help{padding:46px 6%}
+  .props-head{margin-bottom:24px}
+  .group-title{padding-bottom:12px;margin-bottom:12px}
+  .group-title h3{font-size:34px}
+
+  /* full-viewport blocks eat a whole screen before any content */
+  .catalog-cover{min-height:auto;padding:76px 5% 26px}
+  .cover-wrap{min-height:0}
+  .cover-collage{min-height:230px;max-height:230px}
+  .cover-trust{margin-top:24px}
+  .cover-cta-row{margin-top:20px}
+
+  .buyer-card{min-height:0;padding:22px 20px}
+  .prop-hero{min-height:0}
+  .prop-hero-vis,.prop-hero-vis svg{min-height:200px}
+  .catalog-feature-photo,.catalog-feature-photo img{min-height:220px}
+  .loc-map iframe{min-height:240px}
+
+  /* leave room for the fixed bottom bar */
+  body{padding-bottom:62px}
+}
+@media(max-width:560px){
+  .intro{padding:38px 6%}
+  .props-section,.how,.loc,.testi,.lead,.buyer-help{padding:36px 6%}
+  .group-title h3{font-size:30px}
+  .fc-body h3{font-size:22px}
+  .cover-collage{min-height:190px;max-height:190px}
+}
 </style>
 
 </head>
@@ -676,7 +721,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.028;z
           <a class="btn-outline" href="#buyer-help">I NEED BUYING HELP</a>
         </div>
         <div class="cover-trust">
-          <div><strong>6</strong><span>CURATED<br>PROJECTS</span></div>
+          <div><strong>18</strong><span>CURATED<br>PROJECTS</span></div>
           <div><strong>RM230K+</strong><span>ENTRY<br>POINT*</span></div>
           <div><strong>1 DESK</strong><span>COMPARE<br>WITH FELIX</span></div>
         </div>
