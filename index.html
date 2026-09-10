@@ -678,6 +678,34 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.028;z
   .fc-body h3{font-size:22px}
   .cover-collage{min-height:190px;max-height:190px}
 }
+
+/* ===== MOBILE: property cards as scannable list rows ===== */
+@media(max-width:768px){
+  .quickbar{scrollbar-width:none}
+  .quickbar::-webkit-scrollbar{display:none}
+
+  .full-card{flex-direction:row;align-items:stretch;min-height:0}
+  .fc-photo{flex:0 0 122px;aspect-ratio:auto;align-self:stretch}
+  .fc-photo img{height:100%;width:100%;object-fit:cover}
+  .fc-photo span{left:6px;bottom:6px;padding:4px 6px;font-size:6.5px}
+  .fc-missing{font-size:7px;padding:0 6px}
+  .fc-missing small{font-size:6px}
+
+  .fc-body{padding:12px 13px 13px;min-width:0}
+  .fc-top{font-size:6.5px}
+  .fc-body h3{font-size:19px;line-height:1.05;margin:5px 0 2px}
+  .fc-dev{font-size:8.5px}
+  .fc-body p{display:none}
+  .fc-spec{margin-top:9px;gap:0 8px}
+  .fc-spec div{padding:6px 0}
+  .fc-spec b{font-size:9.5px;margin-top:3px}
+  .fc-btn{margin-top:10px;padding:9px 8px;font-size:7px}
+}
+@media(max-width:400px){
+  .fc-photo{flex:0 0 104px}
+  .fc-body h3{font-size:17px}
+  .fc-spec b{font-size:9px}
+}
 </style>
 
 </head>
