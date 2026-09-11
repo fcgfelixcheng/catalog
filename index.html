@@ -1471,10 +1471,10 @@ html{overflow-x:clip}
 .lc-tv{margin-top:6px;font-family:var(--f);font-size:40px;font-weight:400;letter-spacing:-1px;font-variant-numeric:tabular-nums;line-height:1.1;overflow-wrap:anywhere}
 .lc-tv.sm{font-family:var(--s);font-size:21px;font-weight:700;letter-spacing:-.3px}
 .lc-ts{margin-top:5px;font-size:12.5px;color:var(--lc-muted)}
-.lc-tile.hero .lc-tv{color:var(--lc-acc)}
-.lc-tile.gold{background:var(--lc-acc-soft);border-color:rgba(228,188,99,.3)}
-.lc-tile.gold .lc-tl,.lc-tile.gold .lc-ts{color:rgba(228,188,99,.8)}
-.lc-tile.gold .lc-tv{color:var(--lc-acc)}
+.lc-tile.lc-hero .lc-tv{color:var(--lc-acc)}
+.lc-tile.lc-gold{background:var(--lc-acc-soft);border-color:rgba(228,188,99,.3)}
+.lc-tile.lc-gold .lc-tl,.lc-tile.lc-gold .lc-ts{color:rgba(228,188,99,.8)}
+.lc-tile.lc-gold .lc-tv{color:var(--lc-acc)}
 .lc-tw{overflow-x:auto}
 .lc table{width:100%;border-collapse:collapse;font-size:14px;color:var(--lc-ink)}
 .lc th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--lc-muted);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--lc-line)}
@@ -1496,7 +1496,7 @@ html{overflow-x:clip}
 .lc-cash{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:12px;margin-top:14px;padding:16px;background:var(--lc-acc-soft);border:1px solid rgba(228,188,99,.2);border-radius:12px}
 .lc-cl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--lc-muted)}
 .lc-cv{font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:2px}
-.lc-cash .big .lc-cv{font-size:25px;color:var(--lc-acc)}
+.lc-cash .lc-big .lc-cv{font-size:25px;color:var(--lc-acc)}
 .lc-legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--lc-muted);margin-bottom:6px}
 .lc-sw{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
 .lc-chartwrap{position:relative}
@@ -1532,7 +1532,7 @@ html{overflow-x:clip}
   .lc-g4,.lc-g3{grid-template-columns:repeat(2,1fr)}
   .lc-g4>.lc-f:first-child{grid-column:1/-1}
   .lc-tiles{grid-template-columns:1fr 1fr}
-  .lc-tile.hero{grid-column:1/-1}
+  .lc-tile.lc-hero{grid-column:1/-1}
   .lc-exp{grid-template-columns:1fr}
   .lc-card{padding:18px 16px}
   .lc-tab{flex:0 0 auto}
@@ -1577,7 +1577,7 @@ html{overflow-x:clip}
 
   <div class="lc-panel on" id="lcT1">
     <div class="lc-tiles">
-      <div class="lc-tile hero"><div class="lc-tl">Monthly instalment</div><div class="lc-tv" id="lcMPay">—</div><div class="lc-ts" id="lcMPaySub">—</div></div>
+      <div class="lc-tile lc-hero"><div class="lc-tl">Monthly instalment</div><div class="lc-tv" id="lcMPay">—</div><div class="lc-ts" id="lcMPaySub">—</div></div>
       <div class="lc-tile"><div class="lc-tl">Total interest</div><div class="lc-tv sm" id="lcTInt">—</div><div class="lc-ts">over full tenure</div></div>
       <div class="lc-tile"><div class="lc-tl">Total payment</div><div class="lc-tv sm" id="lcTPay">—</div><div class="lc-ts">principal + interest</div></div>
     </div>
@@ -1607,7 +1607,7 @@ html{overflow-x:clip}
       <div class="lc-cash">
         <div><div class="lc-cl">Down payment</div><div class="lc-cv" id="lcCDown">—</div></div>
         <div><div class="lc-cl">Fees &amp; duties</div><div class="lc-cv" id="lcCFees">—</div></div>
-        <div class="big"><div class="lc-cl">Est. cash needed upfront</div><div class="lc-cv" id="lcCTotal">—</div></div>
+        <div class="lc-big"><div class="lc-cl">Est. cash needed upfront</div><div class="lc-cv" id="lcCTotal">—</div></div>
       </div>
       <p class="lc-note">MOT stamp duty is payable when the title is transferred — for new launches where strata title comes later, this can fall 1–3 years after SPA. Developer packages often absorb legal fees; tick the boxes above to match the offer.</p>
     </div>
@@ -1623,7 +1623,7 @@ html{overflow-x:clip}
       </div>
     </div>
     <div class="lc-tiles">
-      <div class="lc-tile hero gold"><div class="lc-tl">Interest saved</div><div class="lc-tv" id="lcXSaved">—</div><div class="lc-ts" id="lcXSavedSub">—</div></div>
+      <div class="lc-tile lc-hero lc-gold"><div class="lc-tl">Interest saved</div><div class="lc-tv" id="lcXSaved">—</div><div class="lc-ts" id="lcXSavedSub">—</div></div>
       <div class="lc-tile"><div class="lc-tl">Finish earlier by</div><div class="lc-tv sm" id="lcXFaster">—</div><div class="lc-ts" id="lcXFasterSub">—</div></div>
       <div class="lc-tile"><div class="lc-tl">Debt-free by</div><div class="lc-tv sm" id="lcXDate">—</div><div class="lc-ts" id="lcXDateSub">—</div></div>
     </div>
@@ -1684,7 +1684,7 @@ html{overflow-x:clip}
       <div id="lcInsAgeNote" class="lc-notice warn" hidden></div>
     </div>
     <div class="lc-tiles">
-      <div class="lc-tile hero"><div class="lc-tl">MRTA — one-time premium</div><div class="lc-tv" id="lcMrtaPrem">—</div><div class="lc-ts" id="lcMrtaSub">—</div></div>
+      <div class="lc-tile lc-hero"><div class="lc-tl">MRTA — one-time premium</div><div class="lc-tv" id="lcMrtaPrem">—</div><div class="lc-ts" id="lcMrtaSub">—</div></div>
       <div class="lc-tile"><div class="lc-tl">MLTA — monthly premium</div><div class="lc-tv sm" id="lcMltaMo">—</div><div class="lc-ts" id="lcMltaYr">—</div></div>
       <div class="lc-tile"><div class="lc-tl">MLTA — total over term</div><div class="lc-tv sm" id="lcMltaTot">—</div><div class="lc-ts">pure term plan — savings-linked plans cost 2–3×</div></div>
     </div>
