@@ -1433,6 +1433,120 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.028;z
 
 
 <!-- ==================== LOCATION ==================== -->
+<!-- ==================== LOAN CALCULATOR ==================== -->
+<style>
+.calc{padding:100px 5%;background:var(--ink)}
+.calc-inner{max-width:1240px;margin:0 auto}
+.calc-head{text-align:center;margin-bottom:48px}
+.calc-head h2{font-family:var(--f);font-size:clamp(42px,5vw,66px);font-weight:300;letter-spacing:-2px;line-height:1.08;margin-bottom:12px}
+.calc-head h2 em{font-style:italic;color:var(--goldhot)}
+.calc-head p{color:var(--muted);font-size:15px}
+.calc-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:2px}
+.calc-in,.calc-out{background:linear-gradient(145deg,#12100e,#0b0a09);padding:44px 40px}
+.cf{margin-bottom:26px}
+.cf:last-child{margin-bottom:0}
+.cf-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+.cf label{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(248,244,238,.55)}
+.cf-val{font-family:var(--f);font-size:22px;color:var(--cream)}
+.cf input[type=number]{width:100%;background:rgba(248,244,238,.04);border:1px solid rgba(248,244,238,.14);border-radius:10px;padding:14px 16px;font-size:20px;color:var(--cream);font-family:var(--s);outline:none}
+.cf input[type=number]:focus{border-color:var(--goldhot)}
+.cf input[type=range]{width:100%;accent-color:var(--goldhot);height:28px;cursor:pointer}
+.cf-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.cf-chips button{background:transparent;border:1px solid rgba(248,244,238,.16);color:rgba(248,244,238,.7);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;transition:all .2s}
+.cf-chips button:hover,.cf-chips button.on{border-color:var(--goldhot);color:var(--goldhot)}
+.calc-out{display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.co-main small{display:block;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--goldhot);margin-bottom:8px}
+.co-main b{display:block;font-family:var(--f);font-weight:400;font-size:clamp(46px,6vw,72px);letter-spacing:-2px;line-height:1;color:var(--cream)}
+.co-main b span{font-size:.4em;letter-spacing:0;color:var(--muted)}
+.co-rows{border-top:1px solid rgba(248,244,238,.08)}
+.co-row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid rgba(248,244,238,.08);font-size:14.5px;color:rgba(248,244,238,.62)}
+.co-row b{color:var(--cream);font-weight:600}
+.co-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--goldhot);color:#0B0B0B;padding:17px 24px;border-radius:999px;font-weight:700;font-size:15px;transition:transform .2s,box-shadow .2s}
+.co-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(228,188,99,.3);color:#0B0B0B}
+.co-note{font-size:12px;color:rgba(248,244,238,.42);line-height:1.6}
+@media(max-width:860px){
+  .calc{padding:72px 16px}
+  .calc-grid{grid-template-columns:1fr}
+  .calc-in,.calc-out{padding:30px 22px}
+}
+</style>
+<section class="calc" id="tools">
+  <div class="calc-inner">
+    <div class="calc-head reveal">
+      <div class="eyebrow">Loan Calculator</div>
+      <h2>How much is it <em>every month?</em></h2>
+      <p>Key in the price — see your installment in 2 seconds.</p>
+    </div>
+    <div class="calc-grid reveal">
+      <div class="calc-in">
+        <div class="cf">
+          <div class="cf-top"><label for="cPrice">Property Price (RM)</label></div>
+          <input type="number" id="cPrice" inputmode="numeric" min="50000" step="1000" value="450000">
+          <div class="cf-chips" id="cPresets">
+            <button type="button" data-p="243000">RM243K</button>
+            <button type="button" data-p="300000">RM300K</button>
+            <button type="button" data-p="450000" class="on">RM450K</button>
+            <button type="button" data-p="614000">RM614K</button>
+            <button type="button" data-p="800000">RM800K</button>
+          </div>
+        </div>
+        <div class="cf">
+          <div class="cf-top"><label for="cDown">Downpayment</label><span class="cf-val" id="cDownV">10%</span></div>
+          <input type="range" id="cDown" min="0" max="30" step="5" value="10">
+        </div>
+        <div class="cf">
+          <div class="cf-top"><label for="cRate">Interest Rate (p.a.)</label><span class="cf-val" id="cRateV">4.00%</span></div>
+          <input type="range" id="cRate" min="3" max="6" step="0.05" value="4">
+        </div>
+        <div class="cf">
+          <div class="cf-top"><label for="cYears">Loan Tenure</label><span class="cf-val" id="cYearsV">35 yrs</span></div>
+          <input type="range" id="cYears" min="10" max="35" step="1" value="35">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="co-main">
+          <small>Estimated Monthly Installment</small>
+          <b id="cMonthly">RM0<span> /mo</span></b>
+        </div>
+        <div class="co-rows">
+          <div class="co-row"><span>Loan amount</span><b id="cLoan">RM0</b></div>
+          <div class="co-row"><span>Downpayment</span><b id="cDownAmt">RM0</b></div>
+          <div class="co-row"><span>Suggested gross income</span><b id="cIncome">RM0 /mo</b></div>
+        </div>
+        <a href="#register" class="co-cta" id="cCta">Check my real loan eligibility →</a>
+        <p class="co-note">Estimate only, for reference. Actual rate, margin and approval depend on the bank, your income, commitments and CCRIS/CTOS. Suggested income assumes installment ≈ one-third of gross monthly income.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var price=$('cPrice'),down=$('cDown'),rate=$('cRate'),yrs=$('cYears');
+  var rm=function(n){return 'RM'+Math.round(n).toLocaleString('en-MY')};
+  function calc(){
+    var p=Math.max(0,+price.value||0),d=+down.value,r=+rate.value/100/12,n=+yrs.value*12;
+    var loan=p*(1-d/100);
+    var m=r?loan*r/(1-Math.pow(1+r,-n)):loan/n;
+    $('cDownV').textContent=d+'%';
+    $('cRateV').textContent=(+rate.value).toFixed(2)+'%';
+    $('cYearsV').textContent=yrs.value+' yrs';
+    $('cMonthly').innerHTML=rm(m)+'<span> /mo</span>';
+    $('cLoan').textContent=rm(loan);
+    $('cDownAmt').textContent=rm(p-loan);
+    $('cIncome').textContent=rm(m*3)+' /mo';
+    [].forEach.call(document.querySelectorAll('#cPresets button'),function(b){b.classList.toggle('on',+b.dataset.p===p)});
+  }
+  [price,down,rate,yrs].forEach(function(el){el.addEventListener('input',calc)});
+  $('cPresets').addEventListener('click',function(e){var b=e.target.closest('button');if(b){price.value=b.dataset.p;calc()}});
+  $('cCta').addEventListener('click',function(){
+    var p=+price.value||0,s=$('leadBudget');if(!s)return;
+    s.value=p<300000?'Below RM300k':p<500000?'RM300k – RM500k':p<700000?'RM500k – RM700k':'Above RM700k';
+  });
+  calc();
+})();
+</script>
+
 <section class="loc" id="location">
   <div class="loc-inner">
     <div class="loc-header reveal">
@@ -1485,7 +1599,6 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.028;z
 
 <!-- ==================== LEAD FORM ==================== -->
 <section class="lead" id="register">
-  <div id="calculator" style="position:relative;top:-80px"></div>
   <div class="lead-inner">
     <div class="lead-left reveal-left">
       <div>
