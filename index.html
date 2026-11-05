@@ -1551,7 +1551,7 @@ html{overflow-x:clip}
   <div class="lc-head reveal">
     <div class="eyebrow">Home Loan Calculator</div>
     <h2>How much is it <em>every month?</em></h2>
-    <p>Instalment · legal fees &amp; stamp duty · flexi loans · MRTA vs MLTA</p>
+    <p>Instalment · legal fees &amp; stamp duty · pay early · flexi loans · MRTA vs MLTA</p>
   </div>
 
   <div class="lc-card">
@@ -1575,6 +1575,7 @@ html{overflow-x:clip}
 
   <div class="lc-tabs" role="tablist" aria-label="Calculator sections">
     <button type="button" class="lc-tab on" data-tab="lcT1" role="tab" aria-selected="true">Loan + fees</button>
+    <button type="button" class="lc-tab" data-tab="lcT2" role="tab" aria-selected="false">Pay early</button>
     <button type="button" class="lc-tab" data-tab="lcT3" role="tab" aria-selected="false">Flexi loans</button>
     <button type="button" class="lc-tab" data-tab="lcT4" role="tab" aria-selected="false">MRTA vs MLTA</button>
   </div>
@@ -1614,6 +1615,34 @@ html{overflow-x:clip}
         <div class="lc-big"><div class="lc-cl">Est. cash needed upfront</div><div class="lc-cv" id="lcCTotal">—</div></div>
       </div>
       <p class="lc-note">MOT stamp duty is payable when the title is transferred — for new launches where strata title comes later, this can fall 1–3 years after SPA. Developer packages often absorb legal fees; tick the boxes above to match the offer.</p>
+    </div>
+  </div>
+
+  <div class="lc-panel" id="lcT2">
+    <div class="lc-card">
+      <div class="lc-eb">Extra payments</div>
+      <div class="lc-grid lc-g3">
+        <label class="lc-f">Extra paid every month<span class="lc-field"><span>RM</span><input id="lcXMonthly" type="number" inputmode="decimal" value="300" min="0" step="50"></span></label>
+        <label class="lc-f">One-time lump sum<span class="lc-field"><span>RM</span><input id="lcXLump" type="number" inputmode="decimal" value="0" min="0" step="1000"></span></label>
+        <label class="lc-f">Lump sum paid in year<span class="lc-field"><input id="lcXYear" type="number" inputmode="numeric" value="5" min="1" step="1"><span>yr</span></span></label>
+      </div>
+    </div>
+    <div class="lc-tiles">
+      <div class="lc-tile lc-hero lc-gold"><div class="lc-tl">Interest saved</div><div class="lc-tv" id="lcXSaved">—</div><div class="lc-ts" id="lcXSavedSub">—</div></div>
+      <div class="lc-tile"><div class="lc-tl">Finish earlier by</div><div class="lc-tv sm" id="lcXFaster">—</div><div class="lc-ts" id="lcXFasterSub">—</div></div>
+      <div class="lc-tile"><div class="lc-tl">Debt-free by</div><div class="lc-tv sm" id="lcXDate">—</div><div class="lc-ts" id="lcXDateSub">—</div></div>
+    </div>
+    <div class="lc-card">
+      <div class="lc-eb">Loan balance over time</div>
+      <div class="lc-legend">
+        <span><span class="lc-sw" style="background:var(--lc-base)"></span>Normal instalment</span>
+        <span><span class="lc-sw" style="background:var(--lc-save)"></span>With extra payments</span>
+      </div>
+      <div class="lc-chartwrap">
+        <svg id="lcChart" role="img" aria-label="Loan balance over time, comparing normal instalment against paying extra"></svg>
+        <div id="lcTip"></div>
+      </div>
+      <p class="lc-note">Most loans have a lock-in period (typically the first 3–5 years): full settlement during lock-in usually triggers a 2–3% penalty, but normal extra payments like these are fine with almost every bank.</p>
     </div>
   </div>
 
@@ -1782,6 +1811,14 @@ html{overflow-x:clip}
     $("lcFLoanLegal").textContent=absL?"Absorbed":RM(loanLegal);$("lcFLoanStamp").textContent=RM(loanStamp);
     $("lcFSst").textContent=RM(sst);$("lcFTotal").textContent=RM(totalFees);
     $("lcCDown").textContent=RM(downRM);$("lcCFees").textContent=RM(totalFees);$("lcCTotal").textContent=RM(downRM+totalFees);
+    var xm=num("lcXMonthly"),xl=num("lcXLump"),xy=Math.max(1,Math.min(yrs,num("lcXYear")||1));
+    var sc=simulate(loan,rate,n,{extra:xm,lump:xl,lumpMonth:Math.round(xy*12)});
+    $("lcXSaved").textContent=RM(base.interest-sc.interest);
+    $("lcXSavedSub").textContent="Total interest becomes "+RM(sc.interest)+" (was "+RM(base.interest)+")";
+    $("lcXFaster").textContent=dur(base.months-sc.months);$("lcXFasterSub").textContent="Loan done in "+dur(sc.months)+" instead of "+dur(base.months);
+    $("lcXDate").textContent=dateAfter(sc.months);$("lcXDateSub").textContent="instead of "+dateAfter(base.months);
+    if(loan>0){drawChart(base,sc,loan)}else{$("lcChart").innerHTML="";CH=null}
+    hideTip();
     var cash=num("lcFxCash"),mSave=num("lcFxMonthly"),fee=num("lcFxFee");
     var semi=simulate(loan,rate,n,{lump:cash,lumpMonth:1,extra:mSave}),full=simulate(loan,rate,n,{offset0:cash,offsetMonthly:mSave});
     $("lcFtInt").textContent=RM(base.interest);$("lcFtTime").textContent=dur(base.months);
@@ -1813,6 +1850,8 @@ html{overflow-x:clip}
     root.querySelectorAll(".lc-panel").forEach(function(p){p.classList.toggle("on",p.id===b.dataset.tab)});
   })});
   ["lcInsSum","lcInsTerm"].forEach(function(id){$(id).addEventListener("input",function(e){if(e.isTrusted)this.dataset.auto="0"})});
+  var svg=$("lcChart");
+  svg.addEventListener("pointermove",onMove);svg.addEventListener("pointerdown",onMove);svg.addEventListener("pointerleave",hideTip);
   recalc();
 })();
 </script>
